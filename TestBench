@@ -1,0 +1,26 @@
+`timescale 1ns / 1ps
+
+module tb_alu();
+
+reg [15:0]A,B;
+reg [1:0]SW;
+wire [31:0]Y;
+
+alu uut(.A(A), .B(B), .SW(SW), .Y(Y));
+initial begin
+ A<=16'b0101_0001_0101_0001; 
+ B<=16'b1010_0010_1010_0010;
+
+SW= 3'b00;      // ADD
+#10 SW<= 2'b01;  // SUBTRACT
+#10 SW<= 2'b10;  // MULTIPLY
+#10 SW<= 2'b11;  // SHIFT RIGHT
+
+#10 SW<= 3'b10;  // MULTIPLY
+#10 SW<= 3'b01;  // SUBTRACT
+#10 SW<= 2'b00;  // ADD
+#10 SW<= 3'b11;  // SHIFT RIGHT
+#10;
+$finish;
+end
+endmodule
